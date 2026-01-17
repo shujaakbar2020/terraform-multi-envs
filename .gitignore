@@ -1,0 +1,74 @@
+############################
+# Terraform
+############################
+
+# Local .terraform directories
+.terraform/
+**/.terraform/*
+
+# Terraform state files (should be remote)
+*.tfstate
+*.tfstate.*
+
+# Terraform plan files
+*.tfplan
+*.out
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Terraform CLI config
+.terraformrc
+terraform.rc
+
+############################
+# Variable files (secrets)
+############################
+
+# Auto-loaded tfvars
+*.tfvars
+*.tfvars.json
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+############################
+# Credentials & Keys
+############################
+
+# GCP
+*.json
+!terraform.tfvars.json
+
+# AWS
+.aws/
+*.pem
+
+# Azure
+.azure/
+
+############################
+# IDE / OS files
+############################
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# IntelliJ / JetBrains
+.idea/
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+############################
+# Logs
+############################
+*.log
