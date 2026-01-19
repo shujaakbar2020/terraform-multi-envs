@@ -1,5 +1,5 @@
 resource "google_compute_instance" "vm" {
-  name         = "server-${terraform.workspace}"
+  name         = "server-1-${terraform.workspace}"
   machine_type = var.machine_type
   zone         = var.zone
 
