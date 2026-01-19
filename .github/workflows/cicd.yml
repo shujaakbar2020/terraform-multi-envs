@@ -44,20 +44,20 @@ jobs:
         run: |
           if [ "${GITHUB_REF##*/}" = "main" ]; then
             terraform workspace select prod || terraform workspace new prod
-            cat >> prod.tfvars <<EOF
-project_id=${{ secrets.PROJECT_ID }}
-region=${{ secrets.REGION }}
-zone=${{ secrets.ZONE }}
-machine_type=${{ secrets.MACHINE_TYPE }}
-EOF
+            cat <<EOF > prod.tfvars
+            project_id=${{ secrets.PROJECT_ID }}
+            region=${{ secrets.REGION }}
+            zone=${{ secrets.ZONE }}
+            machine_type=${{ secrets.MACHINE_TYPE }}
+            EOF
           else
             terraform workspace select dev || terraform workspace new dev
-            cat >> dev.tfvars <<EOF
-project_id=${{ secrets.PROJECT_ID }}
-region=${{ secrets.REGION }}
-zone=${{ secrets.ZONE }}
-machine_type=${{ secrets.MACHINE_TYPE }}
-EOF
+            cat <<EOF > dev.tfvars
+            project_id=${{ secrets.PROJECT_ID }}
+            region=${{ secrets.REGION }}
+            zone=${{ secrets.ZONE }}
+            machine_type=${{ secrets.MACHINE_TYPE }}
+            EOF
           fi
 
       - name: Terraform Format
