@@ -42,7 +42,9 @@ jobs:
       - name: Select Terraform Workspace
         # working-directory: terraform
         run: |
-          if [ "${GITHUB_REF##*/}" = "main" ]; then
+          set -e
+          BRANCH="${GITHUB_REF##*/}"
+          if [ "$BRANCH"s = "main" ]; then
             terraform workspace select prod || terraform workspace new prod
           else
             terraform workspace select dev || terraform workspace new dev
@@ -59,7 +61,9 @@ jobs:
       - name: Terraform Plan
         # working-directory: terraform
         run: |
-          if [ "${GITHUB_REF##*/}" = "main" ]; then
+          set -e
+          BRANCH="${GITHUB_REF##*/}"
+          if [ "$BRANCH" = "main" ]; then
             terraform plan -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}"
           else
             terraform plan -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}"
@@ -68,7 +72,9 @@ jobs:
       - name: Terraform Apply
         # working-directory: terraform
         run: |
-          if [ "${GITHUB_REF##*/}" = "main" ]; then
+          set -e
+          BRANCH="${GITHUB_REF##*/}"
+          if [ "$BRANCH" = "main" ]; then
             terraform apply -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}" --auto-approve
           else
             terraform apply -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}" --auto-approve
