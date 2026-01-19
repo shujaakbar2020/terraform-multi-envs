@@ -44,7 +44,7 @@ jobs:
         run: |
           set -e
           BRANCH="${GITHUB_REF##*/}"
-          if [ "$BRANCH"s = "main" ]; then
+          if [ "$BRANCH" = "main" ]; then
             terraform workspace select prod || terraform workspace new prod
           else
             terraform workspace select dev || terraform workspace new dev
@@ -64,10 +64,18 @@ jobs:
           set -e
           BRANCH="${GITHUB_REF##*/}"
           if [ "$BRANCH" = "main" ]; then
-            terraform plan -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}"
+            terraform plan \
+              -var="project_id=${{ secrets.PROJECT_ID }}" \
+              -var="region=${{ secrets.REGION }}" \
+              -var="zone=${{ secrets.ZONE }}" \
+              -var="machine_type=${{ secrets.MACHINE_TYPE }}"
           else
-            terraform plan -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}"
-          fie
+            terraform plan \
+              -var="project_id=${{ secrets.PROJECT_ID }}" \
+              -var="region=${{ secrets.REGION }}" \
+              -var="zone=${{ secrets.ZONE }}" \
+              -var="machine_type=${{ secrets.MACHINE_TYPE }}"
+          fi
 
       - name: Terraform Apply
         # working-directory: terraform
@@ -75,7 +83,17 @@ jobs:
           set -e
           BRANCH="${GITHUB_REF##*/}"
           if [ "$BRANCH" = "main" ]; then
-            terraform apply -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}" --auto-approve
+            terraform apply \
+              -var="project_id=${{ secrets.PROJECT_ID }}" \
+              -var="region=${{ secrets.REGION }}" \
+              -var="zone=${{ secrets.ZONE }}" \
+              -var="machine_type=${{ secrets.MACHINE_TYPE }}" \
+              -auto-approve
           else
-            terraform apply -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}" --auto-approve
-          fie
+            terraform apply \
+              -var="project_id=${{ secrets.PROJECT_ID }}" \
+              -var="region=${{ secrets.REGION }}" \
+              -var="zone=${{ secrets.ZONE }}" \
+              -var="machine_type=${{ secrets.MACHINE_TYPE }}" \
+              -auto-approve
+          fi
