@@ -44,20 +44,8 @@ jobs:
         run: |
           if [ "${GITHUB_REF##*/}" = "main" ]; then
             terraform workspace select prod || terraform workspace new prod
-            cat <<EOF > prod.tfvars
-            project_id=${{ secrets.PROJECT_ID }}
-            region=${{ secrets.REGION }}
-            zone=${{ secrets.ZONE }}
-            machine_type=${{ secrets.MACHINE_TYPE }}
-            EOF
           else
             terraform workspace select dev || terraform workspace new dev
-            cat <<EOF > dev.tfvars
-            project_id=${{ secrets.PROJECT_ID }}
-            region=${{ secrets.REGION }}
-            zone=${{ secrets.ZONE }}
-            machine_type=${{ secrets.MACHINE_TYPE }}
-            EOF
           fi
 
       - name: Terraform Format
@@ -72,16 +60,16 @@ jobs:
         # working-directory: terraform
         run: |
           if [ "${GITHUB_REF##*/}" = "main" ]; then
-            terraform plan --var-file prod.tfvars
+            terraform plan -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}"
           else
-            terraform plan --var-file dev.tfvars
+            terraform plan -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}"
           fie
 
       - name: Terraform Apply
         # working-directory: terraform
         run: |
           if [ "${GITHUB_REF##*/}" = "main" ]; then
-            terraform apply --var-file prod.tfvars --auto-approve
+            terraform apply -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}" --auto-approve
           else
-            terraform apply --var-file dev.tfvars --auto-approve
+            terraform apply -var="project_id=${{ secrets.PROJECT_ID }}" -var="region=${{ secrets.REGION }}" -var="zone=${{ secrets.ZONE }}" -var="machine_type=${{ secrets.MACHINE_TYPE }}" --auto-approve
           fie
